@@ -23,7 +23,7 @@ httpClient.interceptors.request.use(
       loader = true;
       store.dispatch(SET(["loading", loader]));
     }
-    const token = localStorage.getItem("accessToken") || null;
+    const token = store.getState().authentication.accessToken || null;
     if (token) config.headers.common["Authorization"] = `Bearer ${token}`;
     return config;
   },
