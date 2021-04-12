@@ -90,21 +90,23 @@ export const callAPI = (method, path, body, config = {}) => {
             // true: try to refresh access token. then call queue apis
             // else: logout
 
-            if (path !== "auth/refresh") {
-              if (!isAlreadyFetchingAccessToken) {
-                isAlreadyFetchingAccessToken = true;
-                refreshToken = new Promise((resolve) => {
-                  // dispatch action call refresh token
-                  resolve();
-                });
-              }
-              await refreshToken;
-              return callAPI(method, path, body, config);
-            } else {
-              store.dispatch(logout());
-              history.push("/register");
-              throw error.response?.data?.detail || error;
-            }
+            // if (path !== "auth/refresh") {
+            //   if (!isAlreadyFetchingAccessToken) {
+            //     isAlreadyFetchingAccessToken = true;
+            //     refreshToken = new Promise((resolve) => {
+            //       // dispatch action call refresh token
+            //       resolve();
+            //     });
+            //   }
+            //   await refreshToken;
+            //   return callAPI(method, path, body, config);
+            // } else {
+            //   store.dispatch(logout());
+            //   history.push("/login");
+            //   throw error.response?.data?.detail || error;
+            // }
+            store.dispatch(logout());
+            history.push("/login");
           default:
             throw error.response?.data?.detail || error;
         }
