@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { login } from "../store";
@@ -21,7 +21,6 @@ const Login = () => {
 
   const {
     handleSubmit,
-    control,
     formState: { errors },
     reset,
     register,
@@ -60,56 +59,46 @@ const Login = () => {
                   <label className="xl:col-span-1 col-span-1 flex items-center">
                     Email
                   </label>
-                  <Controller
-                    name="email"
-                    control={control}
-                    render={() => (
-                      <div className="xl:col-span-3 col-span-2 mt-1">
-                        <input
-                          type="text"
-                          {...register("email")}
-                          className="form-input block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        />
-                        <span className="text-red-600 text-sm">
-                          {errors?.email?.message}
-                        </span>
-                      </div>
-                    )}
-                  />
+                  <div className="xl:col-span-3 col-span-2 mt-1">
+                    <input
+                      name="email"
+                      type="text"
+                      {...register("email")}
+                      className="form-input block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    />
+                    <span className="text-red-600 text-sm">
+                      {errors?.email?.message}
+                    </span>
+                  </div>
                 </div>
                 <div className="grid xl:grid-cols-4 grid-cols-3">
                   <label className="col-span-1 flex items-center">
                     Password
                   </label>
-                  <Controller
-                    name="password"
-                    control={control}
-                    render={() => (
-                      <div className="xl:col-span-3 col-span-2 mt-1">
-                        <div className="relative">
-                          <input
-                            type={isShow ? "text" : "password"}
-                            {...register("password")}
-                            className="form-input block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                          />
-                          {isShow ? (
-                            <EyeIcon
-                              className="h-6 w-6 right-2 top-2/4 absolute transform -translate-y-2/4 cursor-pointer"
-                              onClick={() => setIsShow(false)}
-                            />
-                          ) : (
-                            <EyeOffIcon
-                              className="h-6 w-6 right-2 top-2/4 absolute transform -translate-y-2/4 cursor-pointer"
-                              onClick={() => setIsShow(true)}
-                            />
-                          )}
-                        </div>
-                        <span className="text-red-600 text-sm">
-                          {errors?.password?.message}
-                        </span>
-                      </div>
-                    )}
-                  />
+                  <div className="xl:col-span-3 col-span-2 mt-1">
+                    <div className="relative">
+                      <input
+                        name="password"
+                        type={isShow ? "text" : "password"}
+                        {...register("password")}
+                        className="form-input block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      />
+                      {isShow ? (
+                        <EyeIcon
+                          className="h-6 w-6 right-2 top-2/4 absolute transform -translate-y-2/4 cursor-pointer"
+                          onClick={() => setIsShow(false)}
+                        />
+                      ) : (
+                        <EyeOffIcon
+                          className="h-6 w-6 right-2 top-2/4 absolute transform -translate-y-2/4 cursor-pointer"
+                          onClick={() => setIsShow(true)}
+                        />
+                      )}
+                    </div>
+                    <span className="text-red-600 text-sm">
+                      {errors?.password?.message}
+                    </span>
+                  </div>
                 </div>
                 <div className="flex justify-between items-center">
                   <button
@@ -126,21 +115,22 @@ const Login = () => {
                 </div>
               </form>
             </div>
-            <div className="text-center w-2/4 md:block hidden">
-              <div className="bg-blue-600 h-full rounded-br-xl rounded-tr-xl p-12 grid">
-                <h3 className="text-3xl text-center text-white">Sign up</h3>
-                <p className="text-center text-white">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <Link to="/register">
-                  <button
-                    type="button"
-                    className="text-white p-2 hover:bg-blue-800 rounded"
-                  >
-                    Register Now!
-                  </button>
-                </Link>
+            <div className="text-center w-2/4 md:block hidden bg-blue-600 rounded-br-xl rounded-tr-xl rounded-br-xl rounded-tr-xl">
+              <div className="p-12 h-full flex justify-center items-center">
+                <div>
+                  <h3 className="text-3xl text-center text-white">Sign up</h3>
+                  <p className="text-center text-white mt-2">
+                    Don't have account. Please register
+                  </p>
+                  <Link to="/register">
+                    <button
+                      type="button"
+                      className="text-white p-2 hover:bg-blue-800 rounded"
+                    >
+                      Register Now!
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

@@ -3,14 +3,14 @@ import API from "../services";
 
 const initialState = {
   currentUser: {},
+  accessToken: null,
 };
 
 export const login = createAsyncThunk(
   "authentication/login",
   async (params) => {
     const res = await API.login(params);
-    localStorage.setItem("accessToken", res.jwt);
-    return res.user;
+    return res.data;
   }
 );
 
@@ -18,7 +18,7 @@ export const handleRegister = createAsyncThunk(
   "authentication/register",
   async (params) => {
     const res = await API.register(params);
-    return res.user;
+    return res.data;
   }
 );
 
@@ -28,12 +28,13 @@ const store = createSlice({
   reducers: {
     logout: (state) => {
       state.currentUser = {};
-      localStorage.removeItem("accessToken");
+      state.accessToken = null;
     },
   },
   extraReducers: {
     [login.fulfilled]: (state, action) => {
-      state.currentUser = action.payload;
+      state.currentUser = action.payload.user;
+      state.accessToken = action.payload.accessToken;
     },
   },
 });

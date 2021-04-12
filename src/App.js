@@ -8,6 +8,8 @@ import {
 import history from "./router/history";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
+import Loading from "./shared/plugins/loading";
 
 const loading = (
   <div className="pt-3 text-center">
@@ -22,8 +24,10 @@ const Register = React.lazy(() =>
 const TheContent = React.lazy(() => import("./shared/containers/TheContent"));
 
 function App() {
-  const handleRedirec = () => {
-    const token = localStorage.getItem("accessToken");
+  const token = useSelector((state) => state.authentication.accessToken);
+  const isLoading = useSelector((state) => state.root.loading);
+
+  const handleRedirect = () => {
     if (!token) return false;
     return true;
   };
@@ -38,7 +42,7 @@ function App() {
               path="/login"
               name="Login page"
               render={(props) => {
-                return handleRedirec() ? (
+                return handleRedirect() ? (
                   <Redirect to="/" />
                 ) : (
                   <Login {...props} />
@@ -50,7 +54,7 @@ function App() {
               path="/register"
               name="Register page"
               render={(props) => {
-                return handleRedirec() ? (
+                return handleRedirect() ? (
                   <Redirect to="/" />
                 ) : (
                   <Register {...props} />
@@ -61,7 +65,7 @@ function App() {
               path="/"
               name="Container"
               render={(props) => {
-                return handleRedirec() ? (
+                return handleRedirect() ? (
                   <TheContent {...props} />
                 ) : (
                   <Redirect to="/login" />
@@ -72,6 +76,7 @@ function App() {
         </React.Suspense>
       </Router>
       <ToastContainer />
+      <Loading loading={isLoading} />
     </div>
   );
 }
