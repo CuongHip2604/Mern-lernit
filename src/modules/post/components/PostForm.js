@@ -62,19 +62,18 @@ function PostForm(props) {
   };
 
   useEffect(() => {
+    const setData = () => {
+      if (isUpdate && postDetail) {
+        setValue("title", postDetail.title, { shouldDirty: true });
+        setValue("description", postDetail.description, { shouldDirty: true });
+        setValue("url", postDetail.url, { shouldDirty: true });
+        setValue("status", capitalize(startCase(postDetail.status)), {
+          shouldDirty: true,
+        });
+      }
+    };
     setData();
-  }, [postDetail]);
-
-  const setData = () => {
-    if (isUpdate && postDetail) {
-      setValue("title", postDetail.title, { shouldDirty: true });
-      setValue("description", postDetail.description, { shouldDirty: true });
-      setValue("url", postDetail.url, { shouldDirty: true });
-      setValue("status", capitalize(startCase(postDetail.status)), {
-        shouldDirty: true,
-      });
-    }
-  };
+  }, [postDetail, isUpdate, setValue]);
 
   return (
     <form onSubmit={handleSubmit(submitForm)}>

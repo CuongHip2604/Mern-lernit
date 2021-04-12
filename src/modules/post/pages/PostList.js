@@ -20,13 +20,12 @@ function PostList(props) {
   const [idDelete, setIdDelete] = useState(null);
 
   useEffect(() => {
+    const getListpost = async () => {
+      const res = await dispatch(getPosts(filter));
+      unwrapResult(res);
+    };
     getListpost();
-  }, []);
-
-  const getListpost = async () => {
-    const res = await dispatch(getPosts(filter));
-    unwrapResult(res);
-  };
+  }, [dispatch, filter]);
 
   const createLearnit = () => {
     setIsShowModal(true);
