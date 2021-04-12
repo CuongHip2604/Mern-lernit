@@ -5,8 +5,8 @@ import store, { SET } from "../../store";
 import { showToastr } from "../plugins/toastr";
 
 let loader = null;
-let isAlreadyFetchingAccessToken = false;
-let refreshToken = null;
+// let isAlreadyFetchingAccessToken = false;
+// let refreshToken = null;
 
 const httpClient = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
@@ -62,7 +62,7 @@ export const callAPI = (method, path, body, config = {}) => {
 
   return res
     .then((res) => {
-      isAlreadyFetchingAccessToken = false;
+      // isAlreadyFetchingAccessToken = false;
       return res;
     })
     .catch(async (error) => {
@@ -107,6 +107,7 @@ export const callAPI = (method, path, body, config = {}) => {
             // }
             store.dispatch(logout());
             history.push("/login");
+            break;
           default:
             throw error.response?.data?.detail || error;
         }
