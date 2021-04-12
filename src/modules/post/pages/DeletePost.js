@@ -8,16 +8,18 @@ import { SET } from "src/store";
 DeletePost.propTypes = {
   id: PropTypes.string.isRequired,
   onCancel: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 function DeletePost(props) {
-  const { id, onCancel } = props;
+  const { id, onCancel, onDelete } = props;
   const dispatch = useDispatch();
 
   const confirm = async () => {
     const res = await dispatch(deletePost({ _id: id }));
     unwrapResult(res);
     dispatch(SET(["showModal", false]));
+    onDelete();
   };
 
   const cancel = () => {

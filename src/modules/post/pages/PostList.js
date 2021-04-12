@@ -41,6 +41,7 @@ function PostList(props) {
 
   const onCancel = () => {
     setIsShowModal(false);
+    setIsShowModalDelete(false);
     setIsEdit(false);
     dispatch(setPostDetail(null));
   };
@@ -54,6 +55,19 @@ function PostList(props) {
   const handleCancelDelete = () => {
     setIsShowModalDelete(false);
     setIdDelete(null);
+    dispatch(SET(["showModal", false]));
+  };
+
+  const handleCreatePost = () => {
+    setIsShowModal(false);
+  };
+
+  const handleUpdatePost = () => {
+    setIsShowModal(false);
+    setIsEdit(false);
+  };
+  const handleDeletePost = () => {
+    setIsShowModalDelete(false);
   };
 
   return (
@@ -77,13 +91,26 @@ function PostList(props) {
       {isShowModal && (
         <Modal
           title={isEdit ? "Making progress?" : "What do you want to learn?"}
-          content={isEdit ? <UpdatePost /> : <CreatePost />}
+          content={
+            isEdit ? (
+              <UpdatePost onSubmit={handleUpdatePost} />
+            ) : (
+              <CreatePost onSubmit={handleCreatePost} />
+            )
+          }
           onCancel={onCancel}
         />
       )}
       {isShowModalDelete && (
         <Modal
-          content={<DeletePost id={idDelete} onCancel={handleCancelDelete} />}
+          content={
+            <DeletePost
+              id={idDelete}
+              onCancel={handleCancelDelete}
+              onDelete={handleDeletePost}
+            />
+          }
+          onCancel={onCancel}
         />
       )}
     </div>

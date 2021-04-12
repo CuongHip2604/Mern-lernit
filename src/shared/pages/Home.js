@@ -20,6 +20,10 @@ function Home(props) {
     setIsShowModal(false);
   };
 
+  const handleCreatePost = () => {
+    setIsShowModal(false);
+  };
+
   return (
     <div className="h-full">
       {totalItem === 0 ? (
@@ -56,7 +60,7 @@ function Home(props) {
       {isShowModal && (
         <Modal
           title="What do you want to learn?"
-          content={<CreatePost />}
+          content={<CreatePost onSubmit={handleCreatePost} />}
           onCancel={onCancel}
         />
       )}
